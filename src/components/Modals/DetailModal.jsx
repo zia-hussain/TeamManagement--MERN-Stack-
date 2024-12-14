@@ -10,8 +10,7 @@ const DetailModal = ({
 }) => {
   const [selectedMember, setSelectedMember] = useState(null);
 
-  // Retrieve questions specific to the selected team
-  const questions = selectedTeam.questions || []; // Access questions directly from the selected team
+  const questions = selectedTeam.questions || [];
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300">
@@ -47,7 +46,6 @@ const DetailModal = ({
           </button>
         </div>
 
-        {/* Members List */}
         <div className="space-y-4">
           {selectedTeam.members &&
           Object.keys(selectedTeam.members).length > 0 ? (
@@ -101,7 +99,6 @@ const DetailModal = ({
           )}
         </div>
 
-        {/* Close Button */}
         <button
           onClick={onCancel}
           className={`mt-8 w-full font-bold py-3 px-4 rounded-md transition-colors duration-200 transform ${
@@ -114,12 +111,11 @@ const DetailModal = ({
         </button>
       </div>
 
-      {/* Display Answer Modal when a member is selected */}
       {selectedMember && (
         <AnswerModal
           member={selectedMember}
           onClose={() => setSelectedMember(null)}
-          questions={questions} // Pass questions specific to the selected team
+          questions={questions}
         />
       )}
     </div>

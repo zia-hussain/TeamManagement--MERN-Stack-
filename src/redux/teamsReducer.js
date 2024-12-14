@@ -5,8 +5,10 @@ import {
   DELETE_TEAM,
   ADD_MEMBER,
   DELETE_MEMBER,
+  UPDATE_TEAM,
 } from "./actions/actionTypes";
 import { ADD_ANSWER } from "./actions/action";
+import { FETCH_TEAM_DETAILS, UPDATE_TEAM_DETAILS } from "./actions/actionTypes";
 
 const initialState = {
   teams: [],
@@ -20,6 +22,25 @@ const teamsReducer = (state = initialState, action) => {
   const team = state.teams[teamId];
 
   switch (action.type) {
+    case FETCH_TEAM_DETAILS:
+      return {
+        ...state,
+        teams: {
+          ...state.teams,
+          [action.payload.teamId]: action.payload.team,
+        },
+      };
+    case UPDATE_TEAM_DETAILS:
+      return {
+        ...state,
+        teams: {
+          ...state.teams,
+          [action.payload.teamId]: {
+            ...state.teams[action.payload.teamId],
+            ...action.payload.updatedTeam,
+          },
+        },
+      };
     case FETCH_TEAMS:
       return {
         ...state,
@@ -35,6 +56,12 @@ const teamsReducer = (state = initialState, action) => {
         ...state,
         teams: state.teams.filter((team) => team.id !== action.payload),
       };
+    case UPDATE_TEAM:
+      return state.map((team) =>
+        team.id === action.payload.teamId
+          ? { ...team, ...action.payload }
+          : team
+      );
     case ADD_MEMBER:
       return {
         ...state,
@@ -67,7 +94,6 @@ const teamsReducer = (state = initialState, action) => {
             : team
         ),
       };
-
     case ADD_ANSWER:
       // Update member answers
       return {
@@ -84,7 +110,6 @@ const teamsReducer = (state = initialState, action) => {
           },
         },
       };
-
     default:
       return state;
   }

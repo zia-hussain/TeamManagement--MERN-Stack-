@@ -50,7 +50,7 @@ const ManageTeams = () => {
   }, [dispatch]);
 
   const handleBackClick = () => {
-    navigate(-1); // Navigate back to the previous page
+    navigate(-1);
   };
 
   const handleLogout = () => {

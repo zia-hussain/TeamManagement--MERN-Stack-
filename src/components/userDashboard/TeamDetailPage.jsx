@@ -21,7 +21,6 @@ export default function Component() {
   const [open, setOpen] = useState(false);
   const [answer, setAnswer] = useState("");
   const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(null);
-  const [memberId, setMemberId] = useState(null);
   const darkMode = useSelector((state) => state.theme.darkMode);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 

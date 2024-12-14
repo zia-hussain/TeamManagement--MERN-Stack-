@@ -1,29 +1,30 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, get } from "firebase/database";
 
 // Create an asynchronous thunk to fetch users
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const db = getDatabase();
   const usersRef = ref(db, "users");
+
+  const snapshot = await get(usersRef); // Use `get` to fetch data once
+
   const usersList = [];
 
-  return new Promise((resolve) => {
-    onValue(usersRef, (snapshot) => {
-      console.log("test run 12113");
-      snapshot.forEach((childSnapshot) => {
-        const userData = childSnapshot.val();
-        console.log(userData);
-        // Filter out admins and ensure the role is "user"
-        if (!userData.isAdmin && userData.role === "user") {
-          usersList.push({
-            id: childSnapshot.key,
-            ...userData,
-          });
-        }
-      });
-      resolve(usersList);
+  if (snapshot.exists()) {
+    snapshot.forEach((childSnapshot) => {
+      const userData = childSnapshot.val();
+      console.log(userData); // Debug log
+      // Filter out admins and ensure the role is "user"
+      if (!userData.isAdmin && userData.role === "user") {
+        usersList.push({
+          id: childSnapshot.key,
+          ...userData,
+        });
+      }
     });
-  });
+  }
+
+  return usersList; // Return the collected users list
 });
 
 // Create a slice for user management

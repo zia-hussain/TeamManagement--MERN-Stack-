@@ -35,7 +35,6 @@ const CreateTeamForm = ({ darkMode }) => {
     const newTeamRef = ref(db, "teams/" + Date.now());
 
     try {
-      // Fetch user names for selected users
       const memberDetails = await Promise.all(
         selectedUsers.map(async (userId) => {
           try {
@@ -66,7 +65,6 @@ const CreateTeamForm = ({ darkMode }) => {
       resetFormFields();
     } catch (error) {
       console.error("Error creating team:", error);
-      toast.error("Something went wrong. Please try again!");
     }
   };
 

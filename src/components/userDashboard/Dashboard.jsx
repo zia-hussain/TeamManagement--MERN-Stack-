@@ -33,12 +33,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (teams) {
-      // Filter teams based on the current user's ID
       const userTeams = teams.filter(
         (team) => team.author === localStorage.getItem("currentUser")
       );
       setFilteredTeams(userTeams);
-      setLoading(false);
     }
   }, [teams, currentUser]);
 
@@ -46,6 +44,16 @@ const Dashboard = () => {
     dispatch(logout());
     setShowLogoutModal(false);
   };
+
+  useEffect(() => {
+    if (loading) {
+      const interval = setInterval(() => {
+        setLoading(false);
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
 
   const cancelLogout = () => {
     setShowLogoutModal(false);
@@ -99,7 +107,7 @@ const Dashboard = () => {
       if (user) {
         setCurrentUser(user);
         fetchUsername(user.uid);
-        fetchUserTeams(user.uid); // Ensure teams are filtered for the logged-in user
+        fetchUserTeams(user.uid);
       } else {
         console.error("No user is currently logged in");
         setLoading(false);
@@ -192,25 +200,9 @@ const Dashboard = () => {
             </Link>
           </div>
 
-          {filteredTeams.length === 0 ? (
-            <div className="flex items-start justify-center w-max">
-              <div className="flex flex-col items-center justify-start max-w-lg p-6">
-                <img
-                  src={NotFoundImg}
-                  alt="No Teams Illustration"
-                  className="w-48 h-48 mb-6"
-                />
-                <h2 className="text-3xl font-semibold text-gray-300 mb-4 text-center">
-                  No Teams Found
-                </h2>
-                <p className="text-gray-600 text-center">
-                  It seems you’re not part of any team yet. Once you join or are
-                  added to a team, they will appear here.
-                </p>
-              </div>
-            </div>
-          ) : loading ? (
-            [1, 2, 3].map((index) => (
+          {loading ? (
+            // Show loading skeletons
+            [1, 2].map((index) => (
               <div
                 key={index}
                 className="md:min-h-[40vh] w-[25vw] bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg shadow-lg p-5 flex flex-col transition-transform transform"
@@ -241,8 +233,26 @@ const Dashboard = () => {
                 />
               </div>
             ))
+          ) : filteredTeams.length === 0 ? (
+            // Show "No Teams Found" screen
+            <div className="flex items-start justify-center w-max">
+              <div className="flex flex-col items-center justify-start max-w-lg p-6">
+                <img
+                  src={NotFoundImg}
+                  alt="No Teams Illustration"
+                  className="w-48 h-48 mb-6"
+                />
+                <h2 className="text-3xl font-semibold text-gray-300 mb-4 text-center">
+                  No Teams Found
+                </h2>
+                <p className="text-gray-600 text-center">
+                  It seems you’re not part of any team yet. Once you join or are
+                  added to a team, they will appear here.
+                </p>
+              </div>
+            </div>
           ) : (
-            // Team Cards after loading
+            // Show team cards
             filteredTeams.map((team) => {
               const memberCount = team.members
                 ? Object.keys(team.members).length
@@ -264,24 +274,7 @@ const Dashboard = () => {
         <h1 className="text-4xl font-bold flex items-center">Member of</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-14 mt-8 mx-auto">
           {/* Skeleton Loaders for Team Cards */}
-          {memberTeams.length === 0 ? (
-            <div className="flex items-start justify-center w-[90vw]">
-              <div className="flex flex-col items-center justify-start max-w-lg p-6">
-                <img
-                  src={NotFoundImg}
-                  alt="No Teams Illustration"
-                  className="w-48 h-48 mb-6"
-                />
-                <h2 className="text-3xl font-semibold text-gray-300 mb-4 text-center">
-                  No Teams Found
-                </h2>
-                <p className="text-gray-600 text-center">
-                  It seems you’re not part of any team yet. Once you join or are
-                  added to a team, they will appear here.
-                </p>
-              </div>
-            </div>
-          ) : loading ? (
+          {loading ? (
             [1, 2, 3].map((index) => (
               <div
                 key={index}
@@ -313,8 +306,24 @@ const Dashboard = () => {
                 />
               </div>
             ))
+          ) : memberTeams.length === 0 ? (
+            <div className="flex items-start justify-center w-[90vw]">
+              <div className="flex flex-col items-center justify-start max-w-lg p-6">
+                <img
+                  src={NotFoundImg}
+                  alt="No Teams Illustration"
+                  className="w-48 h-48 mb-6"
+                />
+                <h2 className="text-3xl font-semibold text-gray-300 mb-4 text-center">
+                  No Teams Found
+                </h2>
+                <p className="text-gray-600 text-center">
+                  It seems you’re not part of any team yet. Once you join or are
+                  added to a team, they will appear here.
+                </p>
+              </div>
+            </div>
           ) : (
-            // Team Cards after loading
             memberTeams.map((team) => {
               const memberCount = team.members
                 ? Object.keys(team.members).length

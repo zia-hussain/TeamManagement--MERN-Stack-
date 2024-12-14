@@ -1,6 +1,4 @@
 const AnswerModal = ({ member, onClose, questions }) => {
-  // Log each answer for debugging
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300">
       <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-lg w-full shadow-2xl transform transition-all duration-300 ease-in-out border border-gray-200 dark:border-gray-700">
@@ -34,17 +32,17 @@ const AnswerModal = ({ member, onClose, questions }) => {
           {questions.length > 0 ? (
             questions.map((question, index) => {
               const userAnswer = member?.answers?.find(
-                (answer) => answer.questionId === question.id
+                (answer) => answer?.questionId === question.id
               );
               return (
                 <div key={index}>
                   <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
                     {`Q-${index + 1} `}
-                    {question} {/* Assuming question has a text property */}
+                    {question}
                   </p>
                   {userAnswer ? (
                     <p className="text-gray-600 dark:text-gray-400">
-                      {userAnswer.answer} {/* Displaying the user's answer */}
+                      {userAnswer?.answer}
                     </p>
                   ) : (
                     <p className="text-red-500">

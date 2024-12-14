@@ -234,7 +234,6 @@ const Dashboard = () => {
               </div>
             ))
           ) : filteredTeams.length === 0 ? (
-            // Show "No Teams Found" screen
             <div className="flex items-start justify-center w-max">
               <div className="flex flex-col items-center justify-start max-w-lg p-6">
                 <img
@@ -252,7 +251,6 @@ const Dashboard = () => {
               </div>
             </div>
           ) : (
-            // Show team cards
             filteredTeams.map((team) => {
               const memberCount = team.members
                 ? Object.keys(team.members).length

@@ -192,51 +192,71 @@ const Dashboard = () => {
             </Link>
           </div>
 
-          {loading
-            ? [1, 2, 3, 4].map((index) => (
-                <div
-                  key={index}
-                  className="md:min-h-[40vh] w-[25vw] bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg shadow-lg p-5 flex flex-col transition-transform transform"
-                >
-                  <Skeleton
-                    variant="text"
-                    height={40}
-                    width="60%"
-                    style={{
-                      backgroundColor: "rgba(107, 114, 128, 0.1)",
-                    }}
-                  />
-                  <Skeleton
-                    variant="text"
-                    height={20}
-                    width="50%"
-                    style={{
-                      backgroundColor: "rgba(107, 114, 128, 0.1)",
-                    }}
-                  />
-                  <Skeleton
-                    variant="text"
-                    height={60}
-                    width="80%"
-                    style={{
-                      backgroundColor: "rgba(107, 114, 128, 0.1)",
-                    }}
-                  />
-                </div>
-              ))
-            : filteredTeams.map((team) => {
-                const memberCount = team.members
-                  ? Object.keys(team.members).length
-                  : 0;
-                return (
-                  <MyTeamsCard
-                    memberCount={memberCount}
-                    key={team.id}
-                    team={team}
-                    darkMode={darkMode}
-                  />
-                );
-              })}
+          {filteredTeams.length === 0 ? (
+            <div className="flex items-start justify-center w-max">
+              <div className="flex flex-col items-center justify-start max-w-lg p-6">
+                <img
+                  src={NotFoundImg}
+                  alt="No Teams Illustration"
+                  className="w-48 h-48 mb-6"
+                />
+                <h2 className="text-3xl font-semibold text-gray-300 mb-4 text-center">
+                  No Teams Found
+                </h2>
+                <p className="text-gray-600 text-center">
+                  It seems you’re not part of any team yet. Once you join or are
+                  added to a team, they will appear here.
+                </p>
+              </div>
+            </div>
+          ) : loading ? (
+            [1, 2, 3].map((index) => (
+              <div
+                key={index}
+                className="md:min-h-[40vh] w-[25vw] bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg shadow-lg p-5 flex flex-col transition-transform transform"
+              >
+                <Skeleton
+                  variant="text"
+                  height={40}
+                  width="60%"
+                  style={{
+                    backgroundColor: "rgba(107, 114, 128, 0.1)",
+                  }}
+                />
+                <Skeleton
+                  variant="text"
+                  height={20}
+                  width="50%"
+                  style={{
+                    backgroundColor: "rgba(107, 114, 128, 0.1)",
+                  }}
+                />
+                <Skeleton
+                  variant="text"
+                  height={60}
+                  width="80%"
+                  style={{
+                    backgroundColor: "rgba(107, 114, 128, 0.1)",
+                  }}
+                />
+              </div>
+            ))
+          ) : (
+            // Team Cards after loading
+            filteredTeams.map((team) => {
+              const memberCount = team.members
+                ? Object.keys(team.members).length
+                : 0;
+              return (
+                <MyTeamsCard
+                  team={team}
+                  key={team.id}
+                  darkMode={darkMode}
+                  memberCount={memberCount}
+                />
+              );
+            })
+          )}
         </div>
       </div>
 
@@ -262,7 +282,7 @@ const Dashboard = () => {
               </div>
             </div>
           ) : loading ? (
-            [1, 2, 3, 4].map((index) => (
+            [1, 2, 3].map((index) => (
               <div
                 key={index}
                 className="md:min-h-[40vh] w-[25vw] bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg shadow-lg p-5 flex flex-col transition-transform transform"

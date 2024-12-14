@@ -9,7 +9,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload, // This should now only contain serializable data
+        user: action.payload,
       };
     case "LOGOUT":
       return {

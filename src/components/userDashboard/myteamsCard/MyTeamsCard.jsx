@@ -46,7 +46,7 @@ const MyTeamsCard = ({ darkMode, team, memberCount }) => {
   };
 
   const handleNavigateToEditPage = () => {
-    navigate(`/edit-team/${team.id}`); // Use React Router to navigate to a different page
+    navigate(`/edit-team/${team.id}`);
   };
 
   return (

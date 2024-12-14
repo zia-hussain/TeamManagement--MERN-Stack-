@@ -7,7 +7,6 @@ const MembersOfCard = ({ team, darkMode, memberCount }) => {
   return (
     <Tooltip key={team.id} title={team.name} arrow>
       <div
-        title={team.name}
         className={`relative md:min-h-72 w-[25vw] rounded-xl shadow-md p-6 flex flex-col justify-start transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer border-l-4 backdrop-blur-lg overflow-hidden
           ${
             darkMode

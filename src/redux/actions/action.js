@@ -1,4 +1,3 @@
-// actions.js
 import {
   getDatabase,
   ref,
@@ -6,7 +5,7 @@ import {
   remove,
   push,
   get,
-  update,
+  update, // We will use update here
 } from "firebase/database";
 import {
   FETCH_TEAMS,
@@ -14,8 +13,46 @@ import {
   DELETE_TEAM,
   ADD_MEMBER,
   DELETE_MEMBER,
+  UPDATE_TEAM_DETAILS,
+  UPDATE_TEAM,
+  FETCH_TEAM_DETAILS,
 } from "./actionTypes";
+
 import { app } from "../../firebase/firebaseConfig";
+
+export const fetchTeamDetails = (teamId) => async (dispatch) => {
+  const db = getDatabase(app);
+  const teamRef = ref(db, `teams/${teamId}`);
+
+  try {
+    const snapshot = await get(teamRef);
+    const team = snapshot.val();
+    if (team) {
+      dispatch({
+        type: FETCH_TEAM_DETAILS,
+        payload: { teamId, team },
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching team details:", error);
+  }
+};
+
+// Update team details in Firebase
+export const updateTeamDetails = (teamId, updatedTeam) => async (dispatch) => {
+  const db = getDatabase(app);
+  const teamRef = ref(db, `teams/${teamId}`);
+
+  try {
+    await update(teamRef, updatedTeam);
+    dispatch({
+      type: UPDATE_TEAM_DETAILS,
+      payload: { teamId, updatedTeam },
+    });
+  } catch (error) {
+    console.error("Error updating team details:", error);
+  }
+};
 
 // Fetch teams from Firebase and dispatch to Redux
 export const fetchTeams = () => (dispatch) => {
@@ -57,6 +94,24 @@ export const deleteTeam = (teamId) => (dispatch) => {
       payload: teamId,
     });
   });
+};
+
+// Update an existing team in Firebase and Redux
+export const updateTeam = (teamId, updatedTeam) => (dispatch) => {
+  const db = getDatabase(app);
+  const teamRef = ref(db, `teams/${teamId}`);
+
+  // Update the team's data
+  update(teamRef, updatedTeam)
+    .then(() => {
+      dispatch({
+        type: UPDATE_TEAM,
+        payload: { teamId, ...updatedTeam },
+      });
+    })
+    .catch((error) => {
+      console.error("Error updating team: ", error);
+    });
 };
 
 // Fetch team members from Firebase

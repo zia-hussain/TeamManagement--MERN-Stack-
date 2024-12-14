@@ -38,7 +38,6 @@ export const fetchTeamDetails = (teamId) => async (dispatch) => {
   }
 };
 
-// Update team details in Firebase
 export const updateTeamDetails = (teamId, updatedTeam) => async (dispatch) => {
   const db = getDatabase(app);
   const teamRef = ref(db, `teams/${teamId}`);
@@ -54,7 +53,6 @@ export const updateTeamDetails = (teamId, updatedTeam) => async (dispatch) => {
   }
 };
 
-// Fetch teams from Firebase and dispatch to Redux
 export const fetchTeams = () => (dispatch) => {
   const db = getDatabase(app);
   const teamsRef = ref(db, "teams");
@@ -71,7 +69,6 @@ export const fetchTeams = () => (dispatch) => {
   });
 };
 
-// Add a new team to Firebase and Redux
 export const addTeam = (team) => (dispatch) => {
   const db = getDatabase(app);
   const teamsRef = ref(db, "teams/");
@@ -85,7 +82,6 @@ export const addTeam = (team) => (dispatch) => {
   });
 };
 
-// Delete a team from Firebase and Redux
 export const deleteTeam = (teamId) => (dispatch) => {
   const db = getDatabase(app);
   remove(ref(db, `teams/${teamId}`)).then(() => {
@@ -96,12 +92,10 @@ export const deleteTeam = (teamId) => (dispatch) => {
   });
 };
 
-// Update an existing team in Firebase and Redux
 export const updateTeam = (teamId, updatedTeam) => (dispatch) => {
   const db = getDatabase(app);
   const teamRef = ref(db, `teams/${teamId}`);
 
-  // Update the team's data
   update(teamRef, updatedTeam)
     .then(() => {
       dispatch({
@@ -114,7 +108,6 @@ export const updateTeam = (teamId, updatedTeam) => (dispatch) => {
     });
 };
 
-// Fetch team members from Firebase
 export const fetchTeamMembers = (teamId) => async (dispatch) => {
   const db = getDatabase();
   const teamRef = ref(db, `teams/${teamId}/members`);
@@ -131,7 +124,7 @@ export const fetchTeamMembers = (teamId) => async (dispatch) => {
 
         return {
           uid,
-          name: userData ? userData.name : "Unknown", // Fallback if user data is missing
+          name: userData ? userData.name : "Unknown",
         };
       });
 
@@ -148,7 +141,6 @@ export const fetchTeamMembers = (teamId) => async (dispatch) => {
   }
 };
 
-// Add a new member to a team in Firebase and Redux
 export const addMember = (teamId, member) => (dispatch) => {
   const db = getDatabase(app);
   const membersRef = ref(db, `teams/${teamId}/members/`);
@@ -162,7 +154,6 @@ export const addMember = (teamId, member) => (dispatch) => {
   });
 };
 
-// Delete a member from Firebase and Redux
 export const deleteMember = (teamId, memberId) => async (dispatch) => {
   const db = getDatabase(app);
   try {
@@ -177,7 +168,6 @@ export const deleteMember = (teamId, memberId) => async (dispatch) => {
   }
 };
 
-// Fetch user name from Firebase
 export const fetchUserName = async (userId) => {
   const db = getDatabase();
   const userRef = ref(db, `users/${userId}`);
@@ -186,7 +176,7 @@ export const fetchUserName = async (userId) => {
     const snapshot = await get(userRef);
     if (snapshot.exists()) {
       const userData = snapshot.val();
-      return userData.name; // Assuming `name` is the property in your user object
+      return userData.name;
     } else {
       console.log("No data available for this user");
       return "No Name";

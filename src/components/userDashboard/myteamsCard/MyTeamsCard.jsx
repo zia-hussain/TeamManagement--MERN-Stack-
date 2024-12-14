@@ -5,8 +5,10 @@ import DetailModal from "../../Modals/DetailModal";
 import { useDispatch } from "react-redux";
 import { fetchTeamMembers } from "../../../redux/actions/action";
 import { getDatabase, ref, remove } from "firebase/database";
+import { useNavigate } from "react-router-dom";
 
 const MyTeamsCard = ({ darkMode, team, memberCount }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -41,6 +43,10 @@ const MyTeamsCard = ({ darkMode, team, memberCount }) => {
     } catch (error) {
       console.error("Error deleting user: ", error);
     }
+  };
+
+  const handleNavigateToEditPage = () => {
+    navigate(`/edit-team/${team.id}`); // Use React Router to navigate to a different page
   };
 
   return (
@@ -117,6 +123,7 @@ const MyTeamsCard = ({ darkMode, team, memberCount }) => {
     `}
             onClick={(e) => {
               e.stopPropagation();
+              handleNavigateToEditPage();
             }}
           >
             <FontAwesomeIcon icon={faGear} />

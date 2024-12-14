@@ -12,7 +12,7 @@ import { FETCH_TEAM_DETAILS, UPDATE_TEAM_DETAILS } from "./actions/actionTypes";
 
 const initialState = {
   teams: [],
-  members: {}, // Initialize an empty object for members
+  members: {},
   loading: false,
   error: null,
 };
@@ -95,7 +95,6 @@ const teamsReducer = (state = initialState, action) => {
         ),
       };
     case ADD_ANSWER:
-      // Update member answers
       return {
         ...state,
         teams: {

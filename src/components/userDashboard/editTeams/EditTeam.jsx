@@ -23,7 +23,6 @@ const UpdateTeam = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const darkMode = useSelector((state) => state.theme.darkMode);
-
   const { teamId } = useParams();
   const [teamName, setTeamName] = useState("");
   const users = useSelector((state) => state.users.users);

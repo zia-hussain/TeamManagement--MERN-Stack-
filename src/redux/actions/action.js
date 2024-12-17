@@ -122,9 +122,10 @@ export const fetchTeamMembers = (teamId) => async (dispatch) => {
         const userSnapshot = await get(userRef);
         const userData = userSnapshot.val();
 
+        // Extract only serializable properties
         return {
           uid,
-          name: userData ? userData.name : "Unknown",
+          name: userData?.name || "Unknown",
         };
       });
 

@@ -1,4 +1,5 @@
 const AnswerModal = ({ member, onClose, questions }) => {
+  console.log("Member", member);
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300">
       <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-lg w-full shadow-2xl transform transition-all duration-300 ease-in-out border border-gray-200 dark:border-gray-700">
@@ -32,7 +33,7 @@ const AnswerModal = ({ member, onClose, questions }) => {
           {questions.length > 0 ? (
             questions.map((question, index) => {
               const userAnswer = member?.answers?.find(
-                (answer) => answer?.questionId === question.id
+                (answer) => answer.questionId === question.id
               );
               return (
                 <div key={index}>

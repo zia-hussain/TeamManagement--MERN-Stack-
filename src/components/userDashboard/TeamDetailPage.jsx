@@ -104,11 +104,11 @@ export default function Component() {
     <div
       className={`min-h-screen flex flex-col items-center ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
-      } p-5`}
+      } sm:p-5`}
     >
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full p-4 sm:p-0">
         <button
-          className={`hidden lg:flex items-center ${
+          className={`flex items-center ${
             darkMode
               ? "text-blue-400 hover:text-blue-600"
               : "text-blue-600 hover:text-blue-800"
@@ -119,7 +119,7 @@ export default function Component() {
           Back
         </button>
 
-        <div className="flex lg:justify-end justify-between items-center w-full">
+        <div className="flex justify-end  items-center w-full">
           <div className="cursor-pointer" onClick={handleToggleTheme}>
             {darkMode ? <LightModeToggle /> : <DarkModeToggle />}
           </div>
@@ -140,7 +140,7 @@ export default function Component() {
       <div
         className={`w-full max-w-4xl ${
           darkMode ? "bg-gray-800" : "bg-white"
-        } rounded-2xl shadow-lg overflow-hidden mt-8`}
+        } sm:rounded-2xl shadow-lg overflow-hidden mt-8`}
       >
         <div className="p-8 space-y-8">
           <div className="space-y-2">
@@ -154,7 +154,7 @@ export default function Component() {
 
           <div className="space-y-4">
             <h2 className="text-3xl font-semibold">Team Members</h2>
-            <ul className="grid grid-cols-2 gap-4">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {teamDetails.members.map((member, index) => (
                 <li
                   key={member.id}
@@ -176,7 +176,7 @@ export default function Component() {
               {teamDetails.questions.map((question, index) => (
                 <li
                   key={index}
-                  className={`p-4 rounded-lg flex items-center justify-between ${
+                  className={`p-4 rounded-lg flex items-center justify-between flex-wrap gap-4 ${
                     darkMode ? "bg-gray-700" : "bg-gray-200"
                   }`}
                 >

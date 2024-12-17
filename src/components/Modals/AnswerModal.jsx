@@ -32,9 +32,11 @@ const AnswerModal = ({ member, onClose, questions }) => {
         <div className="space-y-4">
           {questions.length > 0 ? (
             questions.map((question, index) => {
-              const userAnswer = member?.answers?.find(
-                (answer) => answer.questionId === question.id
-              );
+              const userAnswer = member?.answers?.find((answer) => {
+                console.log(answer.questionId, "answers");
+                return answer.questionId === question.id;
+              });
+              // console.log("User Answers", userAnswer);
               return (
                 <div key={index}>
                   <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">

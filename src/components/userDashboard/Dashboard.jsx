@@ -122,6 +122,7 @@ const Dashboard = () => {
   }, []);
 
   return (
+    //starts
     <div
       className={`p-5 min-h-screen w-full ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-800"

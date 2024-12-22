@@ -271,7 +271,6 @@ const Dashboard = () => {
       <div className="flex flex-col items-start justify-between border-b border-gray-600 p-8">
         <h1 className="text-4xl font-bold flex items-center">Member of</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-14 mt-8 mx-auto">
-          {/* Skeleton Loaders for Team Cards */}
           {loading ? (
             [1, 2, 3].map((index) => (
               <div

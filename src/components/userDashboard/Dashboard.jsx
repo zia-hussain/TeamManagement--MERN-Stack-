@@ -338,6 +338,7 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Logout Modal */}
       {showLogoutModal && (
         <LogoutModal onConfirm={confirmLogout} onCancel={cancelLogout} />
       )}
